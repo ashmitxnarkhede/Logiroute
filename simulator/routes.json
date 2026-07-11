@@ -1,0 +1,35 @@
+{
+  "routes": [
+    {
+      "id": "R001",
+      "name": "Hinjawadi to Shivajinagar",
+      "points": [
+        {
+          "name": "Hinjawadi Phase 1",
+          "lat": 18.5913,
+          "lon": 73.7389
+        },
+        {
+          "name": "Wakad",
+          "lat": 18.5975,
+          "lon": 73.7644
+        },
+        {
+          "name": "Baner",
+          "lat": 18.5590,
+          "lon": 73.7868
+        },
+        {
+          "name": "University Circle",
+          "lat": 18.5538,
+          "lon": 73.8252
+        },
+        {
+          "name": "Shivajinagar",
+          "lat": 18.5308,
+          "lon": 73.8476
+        }
+      ]
+    }
+  ]
+}
