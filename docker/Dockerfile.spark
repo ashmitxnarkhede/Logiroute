@@ -1,13 +1,15 @@
-FROM apache/spark:4.1.2
+FROM apache/spark:3.5.6
 
 USER root
 
 # Install Python packages
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
+    apt-get install -y python3 python3-pip wget && \
     pip3 install \
         kafka-python \
-        psycopg2-binary
+        psycopg2-binary && \
+    wget -P /opt/spark/jars \
+    https://jdbc.postgresql.org/download/postgresql-42.7.7.jar
 
 # Create a real home directory for the spark user
 RUN mkdir -p /home/spark && \
