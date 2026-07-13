@@ -56,19 +56,24 @@ services:
     restart: unless-stopped
 
   spark:
-    image: bitnami/spark:4.0
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
 
     container_name: logiroute-spark
 
+    depends_on:
+      - kafka
+
+    working_dir: /opt/logiroute
+
+    volumes:
+      - ../:/opt/logiroute
+
+    command: tail -f /dev/null
+
     ports:
       - "4040:4040"
-      - "8081:8080"
-
-    environment:
-        - SPARK_MODE=master
-
-    depends_on:
-        - kafka
 
   postgres:
     image: postgis/postgis:16-3.4

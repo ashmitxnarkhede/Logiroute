@@ -1,3 +1,5 @@
+import time
+
 from models.vehicle import Vehicle
 from telemetry import build_telemetry_event
 from producer import publish
@@ -13,11 +15,11 @@ truck = Vehicle(
     latitude=18.5913,
     longitude=73.7389,
 
-    speed_kmph=42.5,
-    heading=135,
+    speed_kmph=40,
+    heading=90,
 
-    fuel_level_percent=98.7,
-    odometer_km=12453.6,
+    fuel_level_percent=100,
+    odometer_km=0,
 
     engine_status="ON",
     vehicle_status="MOVING",
@@ -27,12 +29,17 @@ truck = Vehicle(
 
     weather="CLEAR",
 
-    cargo_weight_kg=850.0,
+    cargo_weight_kg=850,
 
     battery_voltage=12.4,
-    engine_temperature=87.2,
+    engine_temperature=85
 )
 
-event = build_telemetry_event(truck)
 
-publish(KAFKA_TOPIC, event)
+while True:
+
+    event = build_telemetry_event(truck)
+
+    publish(KAFKA_TOPIC, event)
+
+    time.sleep(1)

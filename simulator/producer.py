@@ -12,11 +12,12 @@ producer = KafkaProducer(
 
 
 def publish(topic, event):
-
+    print("Publishing Event:")
+    print(json.dumps(event, indent=2))
     future = producer.send(topic, event)
 
     metadata = future.get(timeout=10)
-
+    producer.flush()
     print(
         f"""
 Published Successfully
