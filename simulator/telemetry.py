@@ -34,8 +34,7 @@ def build_telemetry_event(vehicle):
             "engine_status": vehicle.engine_status,
             "vehicle_status": vehicle.vehicle_status,
 
-            "traffic_signal": vehicle.traffic_signal,
-            "traffic_density": vehicle.traffic_density,
+            
 
             "weather": vehicle.weather,
 

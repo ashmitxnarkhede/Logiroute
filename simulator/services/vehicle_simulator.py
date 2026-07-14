@@ -1,7 +1,6 @@
-import random
+from routes import ROUTES
 
 from services.route_engine import RouteEngine
-from routes import ROUTES
 
 
 class VehicleSimulator:
@@ -12,19 +11,11 @@ class VehicleSimulator:
 
         RouteEngine(route).move_vehicle(vehicle)
 
-        self.update_speed(vehicle)
         self.update_fuel(vehicle)
+
         self.update_engine_temperature(vehicle)
 
         return vehicle
-
-    def update_speed(self, vehicle):
-
-        change = random.randint(-3, 3)
-
-        vehicle.speed_kmph += change
-
-        vehicle.speed_kmph = max(20, min(vehicle.speed_kmph, 80))
 
     def update_fuel(self, vehicle):
 
@@ -36,6 +27,8 @@ class VehicleSimulator:
         )
 
     def update_engine_temperature(self, vehicle):
+
+        import random
 
         vehicle.engine_temperature += random.uniform(-0.5, 0.5)
 

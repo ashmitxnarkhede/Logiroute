@@ -14,6 +14,7 @@ truck = Vehicle(
     longitude=73.7389,
 
     speed_kmph=42.5,
+    target_speed_kmph=40,
     heading=135,
 
     fuel_level_percent=98.7,
@@ -22,9 +23,7 @@ truck = Vehicle(
     engine_status="ON",
     vehicle_status="MOVING",
 
-    traffic_signal="GREEN",
-    traffic_density="LOW",
-
+   
     weather="CLEAR",
 
     cargo_weight_kg=850.0,

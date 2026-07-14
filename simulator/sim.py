@@ -16,8 +16,6 @@ initializer.initialize()
 vehicle_simulator = VehicleSimulator()
 
 
-vehicle_simulator = VehicleSimulator()
-
 while True:
 
     for vehicle in fleet.get_all_vehicles():

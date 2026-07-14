@@ -15,6 +15,7 @@ class Vehicle:
 
     # Movement
     speed_kmph: float
+    target_speed_kmph: float
     heading: float
 
     # Fuel
@@ -25,8 +26,7 @@ class Vehicle:
     engine_status: str
     vehicle_status: str
 
-    traffic_signal: str
-    traffic_density: str
+    
 
     weather: str
 

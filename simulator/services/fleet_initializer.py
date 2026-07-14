@@ -41,6 +41,7 @@ class FleetInitializer:
             longitude=PUNE_TO_MUMBAI.waypoints[0][1],
 
             speed_kmph=40,
+            target_speed_kmph=40,
             heading=0,
 
             fuel_level_percent=95,
@@ -49,8 +50,7 @@ class FleetInitializer:
             engine_status="ON",
             vehicle_status="MOVING",
 
-            traffic_signal="GREEN",
-            traffic_density="LOW",
+            
 
             weather="CLEAR",
 
