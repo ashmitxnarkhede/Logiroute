@@ -9,32 +9,32 @@ class Vehicle:
     delivery_id: str
     route_id: str
 
-    # GPS Location
+    # GPS
     latitude: float
     longitude: float
 
-    # Vehicle Movement
+    # Movement
     speed_kmph: float
     heading: float
 
-    # Fuel & Distance
+    # Fuel
     fuel_level_percent: float
     odometer_km: float
 
-    # Vehicle State
+    # State
     engine_status: str
     vehicle_status: str
 
-    # Road Conditions
     traffic_signal: str
     traffic_density: str
 
-    # Environment
     weather: str
 
-    # Cargo
     cargo_weight_kg: float
 
-    # Vehicle Health
     battery_voltage: float
     engine_temperature: float
+
+    # Simulator state
+    current_waypoint_index: int = 0
+    progress_to_next_waypoint: float = 0.0
