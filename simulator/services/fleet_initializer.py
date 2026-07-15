@@ -2,7 +2,7 @@ from models.driver import Driver
 from models.vehicle import Vehicle
 from models.delivery import Delivery
 
-from routes import PUNE_TO_MUMBAI
+from services.route_loader import RouteLoader
 
 
 class FleetInitializer:
@@ -11,6 +11,8 @@ class FleetInitializer:
         self.fleet_manager = fleet_manager
 
     def initialize(self):
+        
+        route = RouteLoader.load("R001")
 
         driver = Driver(
             driver_id="D001",
@@ -35,10 +37,10 @@ class FleetInitializer:
             vehicle_id="VH001",
             driver_id=driver.driver_id,
             delivery_id=delivery.delivery_id,
-            route_id=PUNE_TO_MUMBAI.route_id,
-            
-            latitude=PUNE_TO_MUMBAI.waypoints[0][0],
-            longitude=PUNE_TO_MUMBAI.waypoints[0][1],
+            route_id=route.route_id,
+
+            latitude=route.waypoints[0][0],
+            longitude=route.waypoints[0][1],
 
             speed_kmph=40,
             target_speed_kmph=40,
@@ -50,8 +52,6 @@ class FleetInitializer:
             engine_status="ON",
             vehicle_status="MOVING",
 
-            
-
             weather="CLEAR",
 
             cargo_weight_kg=850,
@@ -59,7 +59,6 @@ class FleetInitializer:
             battery_voltage=12.6,
             engine_temperature=88
         )
-
         self.fleet_manager.add_driver(driver)
         self.fleet_manager.add_delivery(delivery)
         self.fleet_manager.add_vehicle(vehicle)

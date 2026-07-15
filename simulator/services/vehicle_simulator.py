@@ -1,13 +1,16 @@
-from routes import ROUTES
-
 from services.route_engine import RouteEngine
 
 
+
+
 class VehicleSimulator:
+    
+    def __init__(self, routes):
+        self.routes = routes
 
     def update(self, vehicle):
 
-        route = ROUTES[vehicle.route_id]
+        route = self.routes[vehicle.route_id]
 
         RouteEngine(route).move_vehicle(vehicle)
 

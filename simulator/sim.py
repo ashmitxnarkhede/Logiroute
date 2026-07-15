@@ -13,7 +13,13 @@ fleet = FleetManager()
 initializer = FleetInitializer(fleet)
 initializer.initialize()
 
-vehicle_simulator = VehicleSimulator()
+from services.route_loader import RouteLoader
+
+routes = {
+    "R001": RouteLoader.load("R001")
+}
+
+vehicle_simulator = VehicleSimulator(routes)
 
 
 while True:
