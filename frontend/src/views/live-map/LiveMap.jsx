@@ -1,19 +1,33 @@
 import { useEffect, useState } from 'react'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+  useMap,
+} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
-import { getLiveFleet } from '../../services/api'
+import { getLiveFleet, getRoute } from '../../services/api'
+
+function RecenterMap({ position }) {
+  const map = useMap()
+
+  useEffect(() => {
+    if (position) {
+      map.setView(position, map.getZoom(), {
+        animate: true,
+      })
+    }
+  }, [position, map])
+
+  return null
+}
 
 const LiveMap = () => {
   const [vehicle, setVehicle] = useState(null)
-
-  useEffect(() => {
-    loadVehicle()
-
-    const interval = setInterval(loadVehicle, 2000)
-
-    return () => clearInterval(interval)
-  }, [])
+  const [route, setRoute] = useState([])
 
   async function loadVehicle() {
     try {
@@ -27,15 +41,47 @@ const LiveMap = () => {
     }
   }
 
+  async function loadRoute() {
+    try {
+      const data = await getRoute('R001')
+      setRoute(data.waypoints)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  useEffect(() => {
+    loadVehicle()
+    loadRoute()
+
+    const interval = setInterval(loadVehicle, 2000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const position = vehicle ? [vehicle.latitude, vehicle.longitude] : [18.5204, 73.8567]
+
   return (
-    <MapContainer center={[18.5204, 73.8567]} zoom={7} style={{ height: '80vh', width: '100%' }}>
+    <MapContainer center={position} zoom={13} style={{ height: '80vh', width: '100%' }}>
       <TileLayer
         attribution="&copy; OpenStreetMap contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
+      <RecenterMap position={position} />
+
+      {route.length > 0 && (
+        <Polyline
+          positions={route}
+          pathOptions={{
+            color: 'blue',
+            weight: 5,
+          }}
+        />
+      )}
+
       {vehicle && (
-        <Marker position={[vehicle.latitude, vehicle.longitude]}>
+        <Marker position={position}>
           <Popup>
             <strong>{vehicle.vehicle_id}</strong>
             <br />

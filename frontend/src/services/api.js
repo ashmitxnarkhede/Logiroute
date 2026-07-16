@@ -9,3 +9,13 @@ export async function getLiveFleet() {
 
   return await response.json()
 }
+
+export async function getRoute(routeId) {
+  const response = await fetch(`${API_URL}/routes/${routeId}`)
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch route')
+  }
+
+  return await response.json()
+}
