@@ -26,16 +26,13 @@ function RecenterMap({ position }) {
 }
 
 const LiveMap = () => {
-  const [vehicle, setVehicle] = useState(null)
+  const [vehicles, setVehicles] = useState([])
   const [route, setRoute] = useState([])
 
-  async function loadVehicle() {
+  async function loadVehicles() {
     try {
       const data = await getLiveFleet()
-
-      if (data.length > 0) {
-        setVehicle(data[0])
-      }
+      setVehicles(data)
     } catch (err) {
       console.error(err)
     }
@@ -51,24 +48,27 @@ const LiveMap = () => {
   }
 
   useEffect(() => {
-    loadVehicle()
+    loadVehicles()
     loadRoute()
 
-    const interval = setInterval(loadVehicle, 2000)
+    const interval = setInterval(loadVehicles, 2000)
 
     return () => clearInterval(interval)
   }, [])
 
-  const position = vehicle ? [vehicle.latitude, vehicle.longitude] : [18.5204, 73.8567]
+  const center =
+    vehicles.length > 0
+      ? [vehicles[0].latitude, vehicles[0].longitude]
+      : [18.5204, 73.8567]
 
   return (
-    <MapContainer center={position} zoom={13} style={{ height: '80vh', width: '100%' }}>
+    <MapContainer center={center} zoom={13} style={{ height: '80vh', width: '100%' }}>
       <TileLayer
         attribution="&copy; OpenStreetMap contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <RecenterMap position={position} />
+      <RecenterMap position={center} />
 
       {route.length > 0 && (
         <Polyline
@@ -80,17 +80,31 @@ const LiveMap = () => {
         />
       )}
 
-      {vehicle && (
-        <Marker position={position}>
+      {vehicles.map((vehicle) => (
+        <Marker
+          key={vehicle.vehicle_id}
+          position={[vehicle.latitude, vehicle.longitude]}
+        >
           <Popup>
             <strong>{vehicle.vehicle_id}</strong>
+
+            <br />
+            Driver: {vehicle.driver_id}
+
             <br />
             Speed: {vehicle.speed} km/h
+
             <br />
-            Fuel: {vehicle.fuel_level.toFixed(1)}%
+            Fuel: {Number(vehicle.fuel_level).toFixed(1)}%
+
+            <br />
+            Remaining: {Number(vehicle.remaining_distance_km).toFixed(1)} km
+
+            <br />
+            ETA: {Math.round(vehicle.eta_minutes)} min
           </Popup>
         </Marker>
-      )}
+      ))}
     </MapContainer>
   )
 }

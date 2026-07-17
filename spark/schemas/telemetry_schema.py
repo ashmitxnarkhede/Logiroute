@@ -21,7 +21,8 @@ telemetry_schema = StructType([
 
     StructField("fuel_level_percent", DoubleType()),
     StructField("odometer_km", DoubleType()),
-
+    StructField("remaining_distance_km", DoubleType(), True),
+    StructField("eta_minutes", DoubleType(), True),
     StructField("engine_status", StringType()),
     StructField("vehicle_status", StringType()),
 

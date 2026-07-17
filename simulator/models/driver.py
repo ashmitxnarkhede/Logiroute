@@ -11,3 +11,4 @@ class Driver:
     experience_years: int
 
     status: str
+    driving_style: str

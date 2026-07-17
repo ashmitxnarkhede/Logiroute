@@ -1,10 +1,10 @@
 from services.route_engine import RouteEngine
-
-
+from services.driver_engine import DriverEngine
+from services.eta_engine import ETAEngine
 
 
 class VehicleSimulator:
-    
+
     def __init__(self, routes):
         self.routes = routes
 
@@ -12,11 +12,21 @@ class VehicleSimulator:
 
         route = self.routes[vehicle.route_id]
 
+        DriverEngine.update(vehicle)
         RouteEngine(route).move_vehicle(vehicle)
+        ETAEngine.update(vehicle)
 
-        self.update_fuel(vehicle)
+        # Mark vehicle as arrived
+        if vehicle.remaining_distance_km <= 0:
+            vehicle.remaining_distance_km = 0
+            vehicle.eta_minutes = 0
+            vehicle.speed_kmph = 0
+            vehicle.vehicle_status = "ARRIVED"
+            vehicle.engine_status = "OFF"
 
-        self.update_engine_temperature(vehicle)
+        if vehicle.vehicle_status != "ARRIVED":
+            self.update_fuel(vehicle)
+            self.update_engine_temperature(vehicle)
 
         return vehicle
 

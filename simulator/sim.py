@@ -29,6 +29,7 @@ while True:
         vehicle_simulator.update(vehicle)
 
         event = build_telemetry_event(vehicle)
+        print(event["payload"])
 
         publish(KAFKA_TOPIC, event)
 

@@ -30,7 +30,8 @@ def build_telemetry_event(vehicle):
 
             "fuel_level_percent": vehicle.fuel_level_percent,
             "odometer_km": vehicle.odometer_km,
-
+            "remaining_distance_km": vehicle.remaining_distance_km,
+            "eta_minutes": vehicle.eta_minutes,
             "engine_status": vehicle.engine_status,
             "vehicle_status": vehicle.vehicle_status,
 

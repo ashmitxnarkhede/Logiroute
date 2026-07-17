@@ -57,11 +57,29 @@ class RouteEngine:
             progress_increment = distance_this_second / segment_distance
 
         vehicle.latitude, vehicle.longitude = interpolate(
-            start,
-            end,
-            vehicle.progress_to_next_waypoint
-        )
+    start,
+    end,
+    vehicle.progress_to_next_waypoint
+)
 
         vehicle.odometer_km += distance_this_second
+
+        # Calculate remaining distance
+        remaining = haversine_distance(
+            vehicle.latitude,
+            vehicle.longitude,
+            end[0],
+            end[1]
+        )
+
+        for i in range(vehicle.current_waypoint_index + 1, len(waypoints) - 1):
+            remaining += haversine_distance(
+                waypoints[i][0],
+                waypoints[i][1],
+                waypoints[i + 1][0],
+                waypoints[i + 1][1]
+            )
+
+        vehicle.remaining_distance_km = round(remaining, 2)
 
         return vehicle

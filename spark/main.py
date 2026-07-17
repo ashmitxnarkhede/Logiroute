@@ -60,6 +60,8 @@ db_df = (
 
         col("payload.speed_kmph").alias("speed"),
         col("payload.fuel_level_percent").alias("fuel_level"),
+        col("payload.remaining_distance_km").alias("remaining_distance_km"),
+        col("payload.eta_minutes").alias("eta_minutes"),
         col("payload.vehicle_status").alias("status")
     )
 )
